@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
+@Table(name = "categorias")
 @Entity
 public class Categoria {
     @Id
@@ -17,4 +20,7 @@ public class Categoria {
     @NotBlank(message = "Descricão não pode estar vazia")
     @Column(columnDefinition = "TEXT")
     private String descricao;
+
+    @Column(name = "deleted")
+    private LocalDateTime deleted;
 }

@@ -4,8 +4,10 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "produtos")
 @Data
 public class Produto {
     @Id
@@ -22,6 +24,9 @@ public class Produto {
 
     @DecimalMin(value = "0.0", inclusive = false, message = "O preço deve ser maior que zero")
     private BigDecimal preco;
+
+    @Column(name = "deleted")
+    private LocalDateTime deleted;
 
     @ManyToOne
     @JoinColumn (name = "categoria_id")
