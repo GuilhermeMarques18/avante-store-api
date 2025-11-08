@@ -174,11 +174,9 @@ Depois de adicionar e rebuildar, a UI estará em: http://localhost:8081/swagger-
 Se quiser, eu gero o trecho do pom.xml já pronto e a classe de configuração (se necessário).
 
 ☁️ Deploy
-
-No momento não há deploy — apenas execução local. Sugestões de hosts para futuro deploy: Render, Railway, Heroku (buildpacks), AWS, Google Cloud.
-
+No momento não há deploy — apenas execução local.
 🧑‍💻 Autor
 Guilherme Marques Ramos de Souza
 
 Guilherme Marques
-📧 seuemail@exemplo.com
+📧 mr.gmrsouza@gmail.com
