@@ -171,7 +171,6 @@ A aplicação ainda não tem o Swagger ativado por padrão. Para adicionar a int
 
 Depois de adicionar e rebuildar, a UI estará em: http://localhost:8081/swagger-ui.html
 
-Se quiser, eu gero o trecho do pom.xml já pronto e a classe de configuração (se necessário).
 
 ☁️ Deploy
 No momento não há deploy — apenas execução local.
