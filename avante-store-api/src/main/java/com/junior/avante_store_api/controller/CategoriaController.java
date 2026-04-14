@@ -1,7 +1,7 @@
 package com.junior.avante_store_api.controller;
 
-import com.junior.avante_store_api.dto.CategoriaRequestDTO;
-import com.junior.avante_store_api.dto.CategoriaResponseDTO;
+import com.junior.avante_store_api.dto.categoria.CategoriaRequestDTO;
+import com.junior.avante_store_api.dto.categoria.CategoriaResponseDTO;
 import com.junior.avante_store_api.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

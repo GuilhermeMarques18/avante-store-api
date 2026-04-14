@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>, JpaSpecificationExecutor<Produto> {
@@ -19,15 +18,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>, JpaSpec
     @Override
     @Query("SELECT p FROM Produto p WHERE p.deleted IS NULL")
     Page<Produto> findAll(Pageable pageable);
-
-
-    @Query("SELECT p FROM Produto p WHERE p.categoria.id = :categoriaId AND p.deleted IS NULL")
-    Page<Produto> findByCategoriaId(@Param("categoriaId") Long categoriaId, Pageable pageable);
-
-
-    @Query("SELECT p FROM Produto p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%')) AND p.deleted IS NULL")
-    Page<Produto> findByNomeContainingIgnoreCase(@Param("nome") String nome, Pageable pageable);
-
 
     @Query("SELECT p FROM Produto p WHERE " +
             "(:nome IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) AND " +
@@ -45,11 +35,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>, JpaSpec
     @Query("UPDATE Produto p SET p.deleted = :now WHERE p.id = :id AND p.deleted IS NULL")
     int softDeleteById(@Param("id") Long id, @Param("now") LocalDateTime now);
 
-    @Query("SELECT p FROM Produto p WHERE p.deleted IS NULL")
-    List<Produto> findAllActive();
-
-
-    @Modifying
-    @Query("UPDATE Produto p SET p.deleted = NULL WHERE p.id = :id")
-    int restoreById(@Param("id") Long id);
 }

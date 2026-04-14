@@ -1,0 +1,17 @@
+package com.junior.avante_store_api.dto.produto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
+@Builder
+public class ProdutoResponse {
+    private Long id;
+    private String nome;
+    private String descricao;
+    private BigDecimal preco;
+    private Long categoriaId;
+    private String categoriaNome; // útil pro frontend sem precisar de outra chamada
+}

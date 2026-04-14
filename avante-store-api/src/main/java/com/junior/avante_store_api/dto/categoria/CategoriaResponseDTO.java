@@ -1,4 +1,4 @@
-package com.junior.avante_store_api.dto;
+package com.junior.avante_store_api.dto.categoria;
 
 import lombok.Builder;
 import lombok.Data;

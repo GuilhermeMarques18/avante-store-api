@@ -1,7 +1,7 @@
 package com.junior.avante_store_api.service;
 
-import com.junior.avante_store_api.dto.CategoriaRequestDTO;
-import com.junior.avante_store_api.dto.CategoriaResponseDTO;
+import com.junior.avante_store_api.dto.categoria.CategoriaRequestDTO;
+import com.junior.avante_store_api.dto.categoria.CategoriaResponseDTO;
 import com.junior.avante_store_api.exception.NotFoundException;
 import com.junior.avante_store_api.model.Categoria;
 import com.junior.avante_store_api.repository.CategoriaRepository;
