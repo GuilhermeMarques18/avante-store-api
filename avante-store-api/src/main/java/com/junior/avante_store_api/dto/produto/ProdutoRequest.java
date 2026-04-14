@@ -23,5 +23,5 @@ public class ProdutoRequest {
     private BigDecimal preco;
 
     @NotNull(message = "Categoria não pode ser nula")
-    private Long categoriaId; // recebe só o ID, não o objeto inteiro
+    private Long categoriaId;
 }

@@ -13,5 +13,5 @@ public class ProdutoResponse {
     private String descricao;
     private BigDecimal preco;
     private Long categoriaId;
-    private String categoriaNome; // útil pro frontend sem precisar de outra chamada
+    private String categoriaNome;
 }
