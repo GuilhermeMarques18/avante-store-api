@@ -1,51 +1,70 @@
 package com.junior.avante_store_api.service;
 
+import com.junior.avante_store_api.dto.CategoriaRequestDTO;
+import com.junior.avante_store_api.dto.CategoriaResponseDTO;
+import com.junior.avante_store_api.exception.NotFoundException;
 import com.junior.avante_store_api.model.Categoria;
 import com.junior.avante_store_api.repository.CategoriaRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriaService {
-    @Autowired
-    private CategoriaRepository repository;
 
+    private final CategoriaRepository repository;
 
-    public Page<Categoria> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<CategoriaResponseDTO> list(Pageable pageable) {
+        return repository.findAll(pageable).map(this::toResponse);
     }
 
-    public Optional<Categoria> findById(Long id) {
-        return repository.findById(id).filter(c -> c.getDeleted() == null);
-    }
-
-    @Transactional
-    public Categoria save(Categoria categoria) {
-        return repository.save(categoria);
+    public CategoriaResponseDTO findById(Long id) {
+        return repository.findById(id)
+                .filter(c -> c.getDeleted() == null)
+                .map(this::toResponse)
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
     }
 
     @Transactional
-    public Categoria update(Long id, Categoria categoriaAtualizada) {
-        Categoria exist = findById(id).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
-        exist.setNome(categoriaAtualizada.getNome());
-        exist.setDescricao(categoriaAtualizada.getDescricao());
-        return repository.save(exist);
+    public CategoriaResponseDTO save(CategoriaRequestDTO request) {
+        Categoria categoria = new Categoria();
+        categoria.setNome(request.getNome());
+        categoria.setDescricao(request.getDescricao());
+        return toResponse(repository.save(categoria));
+    }
+
+    @Transactional
+    public CategoriaResponseDTO update(Long id, CategoriaRequestDTO request) {
+        Categoria categoria = repository.findById(id)
+                .filter(c -> c.getDeleted() == null)
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+
+        categoria.setNome(request.getNome());
+        categoria.setDescricao(request.getDescricao());
+        return toResponse(repository.save(categoria));
     }
 
     @Transactional
     public void delete(Long id) {
         if (repository.softDeleteById(id, LocalDateTime.now()) == 0) {
-            throw new RuntimeException("Categoria não encontrada ou já deletada");
+            throw new NotFoundException("Categoria não encontrada ou já deletada");
         }
     }
 
-    public Page<Categoria> searchAdvanced(String nome, Pageable pageable) {
-        return repository.searchAdvanced(nome, pageable);
+    public Page<CategoriaResponseDTO> searchAdvanced(String nome, Pageable pageable) {
+        return repository.searchAdvanced(nome, pageable).map(this::toResponse);
+    }
+
+    private CategoriaResponseDTO toResponse(Categoria c) {
+        return CategoriaResponseDTO.builder()
+                .id(c.getId())
+                .nome(c.getNome())
+                .descricao(c.getDescricao())
+                .build();
     }
 }

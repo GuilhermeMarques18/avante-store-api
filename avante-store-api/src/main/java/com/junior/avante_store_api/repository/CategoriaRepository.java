@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>, JpaSpecificationExecutor<Categoria> {
@@ -20,11 +20,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long>, Jpa
     @Override
     @Query("SELECT c FROM Categoria c WHERE c.deleted IS NULL")
     Page<Categoria> findAll(Pageable pageable);
-
-
-    @Query("SELECT c FROM Categoria c WHERE LOWER(c.nome) LIKE LOWER(CONCAT('%', :nome, '%')) AND c.deleted IS NULL")
-    Page<Categoria> findByNomeContainingIgnoreCase(@Param("nome") String nome, Pageable pageable);
-
 
     @Query("SELECT c FROM Categoria c WHERE " +
             "(:nome IS NULL OR LOWER(c.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) AND " +
@@ -36,12 +31,4 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long>, Jpa
     @Query("UPDATE Categoria c SET c.deleted = :now WHERE c.id = :id AND c.deleted IS NULL")
     int softDeleteById(@Param("id") Long id, @Param("now") LocalDateTime now);
 
-
-    @Query("SELECT c FROM Categoria c WHERE c.deleted IS NULL")
-    List<Categoria> findAllActive();
-
-
-    @Modifying
-    @Query("UPDATE Categoria c SET c.deleted = NULL WHERE c.id = :id")
-    int restoreById(@Param("id") Long id);
 }
